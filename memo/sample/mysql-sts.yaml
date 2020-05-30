@@ -45,6 +45,26 @@ spec:
               name: confd
             - mountPath: /mnt/backup
               name: backup
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -ec
+                - >-
+                  mysqladmin -h localhost --user=root --password=${MYSQL_ROOT_PASSWORD} ping
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -ec
+                - >-
+                  mysqladmin -h localhost --user=root --password=${MYSQL_ROOT_PASSWORD} -e "SELECT 1"
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 5
       volumes:
         - name: initdb
           emptyDir: {}

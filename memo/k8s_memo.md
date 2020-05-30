@@ -44,3 +44,7 @@ $ kubectl delete deployment mattermost-preview --cascade=false -v=8
 $ kubectl run test1 -i --rm --image k8spracticalguide/busybox:1.28 --restart=Never -- ping -c 10.1.0.122
 ```
 * クラスタ外のアプリケーション接続はExternalNameとか使うのは良さげ。そうすると、接続先が環境ごとで変わっても問題ナッシングfor the people
+* コンテナを終了させる前に実施したい処理がある場合には `preStop` hookと呼ばれる設定を `spec.containers.lifecycle.preStop` に指定可能（GracePeriodも重要）
+* PodDisruptionBudgetを設定しておくと、動作しているPodの数が指定した数以下にならないようにNodeの退去などができます（ノード停止のブロックとなる設定をしないにように注意）
+* PodSecurityPolicyで、Podの設定がみたすべきポリシーを定義すると、それを満たさないPodのデプロイを禁止できるんだってさ
+* `kubectl top` コマンドで各リソースの利用状況が見れんだってさ
