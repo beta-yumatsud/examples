@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: busybox-volumes
+spec:
+    volumes:
+        - name: tmpDir
+          emptyDir: {}
+    containers:
+        - name: busybox
+          image: busybox
+          volumeMounts:
+              - name: tmpDir
+                mountPath: /etc/foo
